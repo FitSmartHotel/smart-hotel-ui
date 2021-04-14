@@ -98,7 +98,7 @@ module.exports = options =>
       new webpack.HotModuleReplacementPlugin(),
       new WebpackNotifierPlugin({
         title: 'Smart Hotel UI',
-        contentImage: path.join(__dirname, 'logo-jhipster.png'),
+        contentImage: path.join(__dirname, 'logo.png'),
       }),
     ].filter(Boolean),
   });

@@ -15,6 +15,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave';
+import { faBed } from '@fortawesome/free-solid-svg-icons/faBed';
 import { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch';
 import { faSort } from '@fortawesome/free-solid-svg-icons/faSort';
 import { faSync } from '@fortawesome/free-solid-svg-icons/faSync';
@@ -68,6 +69,7 @@ export const loadIcons = () => {
     faUserPlus,
     faUsers,
     faUsersCog,
-    faWrench
+    faWrench,
+    faBed
   );
 };
