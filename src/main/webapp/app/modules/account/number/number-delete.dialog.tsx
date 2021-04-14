@@ -9,15 +9,13 @@ import { RouteComponentProps } from 'react-router-dom';
 export interface NumberDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ number: string }> {}
 
 export const NumberDeleteDialog = (props: NumberDeleteDialogProps) => {
-  // eslint-disable-next-line no-console
-  console.log(props);
   useEffect(() => {
     props.getNumber(props.match.params.number);
   }, []);
 
   const handleClose = event => {
     event.stopPropagation();
-    props.history.push('/numbers');
+    props.history.push('/admin/numbers');
   };
 
   const confirmDelete = event => {
