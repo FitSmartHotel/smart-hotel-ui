@@ -49,7 +49,7 @@ describe('Creating account tests', () => {
   });
 
   it('should handle CREATE_ACCOUNT failure', () => {
-    const payload = { response: { data: { errorKey: 'fake error' } } };
+    const payload = { response: { numbers: { errorKey: 'fake error' } } };
     expect(
       register(undefined, {
         type: FAILURE(ACTION_TYPES.CREATE_ACCOUNT),
@@ -58,7 +58,7 @@ describe('Creating account tests', () => {
     ).toEqual({
       ...initialState,
       registrationFailure: true,
-      errorMessage: payload.response.data.errorKey,
+      errorMessage: payload.response.numbers.errorKey,
     });
   });
 

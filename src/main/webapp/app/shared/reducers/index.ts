@@ -11,6 +11,7 @@ import activate, { ActivateState } from 'app/modules/account/activate/activate.r
 import password, { PasswordState } from 'app/modules/account/password/password.reducer';
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
+import numbers, { NumberState } from 'app/modules/account/number/number.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -23,7 +24,7 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
-  /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
+  readonly numbers: NumberState;
   readonly loadingBar: any;
 }
 
@@ -37,6 +38,7 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
+  numbers,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });
