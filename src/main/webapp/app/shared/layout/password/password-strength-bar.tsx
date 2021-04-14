@@ -15,7 +15,7 @@ export const PasswordStrengthBar = ({ password }: IPasswordStrengthBarProps) => 
     const flags = {
       lowerLetters: /[a-z]+/.test(p),
       upperLetters: /[A-Z]+/.test(p),
-      numbers: /[0-9]+/.test(p),
+      data: /[0-9]+/.test(p),
       symbols: regex.test(p),
     };
 

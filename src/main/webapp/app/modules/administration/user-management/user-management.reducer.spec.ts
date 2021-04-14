@@ -117,48 +117,44 @@ describe('User management reducer tests', () => {
   describe('Success', () => {
     it('should update state according to a successful fetch users request', () => {
       const headers = { ['x-total-count']: 42 };
-      const payload = { numbers: 'some handsome users', headers };
+      const payload = { data: 'some handsome users', headers };
       const toTest = userManagement(undefined, { type: SUCCESS(ACTION_TYPES.FETCH_USERS), payload });
 
       expect(toTest).toMatchObject({
         loading: false,
-        users: payload.numbers,
+        users: payload.data,
         totalItems: headers['x-total-count'],
       });
     });
 
     it('should update state according to a successful fetch user request', () => {
-      const payload = { numbers: 'some handsome user' };
+      const payload = { data: 'some handsome user' };
       const toTest = userManagement(undefined, { type: SUCCESS(ACTION_TYPES.FETCH_USER), payload });
 
       expect(toTest).toMatchObject({
         loading: false,
-        user: payload.numbers,
+        user: payload.data,
       });
     });
 
     it('should update state according to a successful fetch role request', () => {
-      const payload = { numbers: [AUTHORITIES.ADMIN] };
+      const payload = { data: [AUTHORITIES.ADMIN] };
       const toTest = userManagement(undefined, { type: SUCCESS(ACTION_TYPES.FETCH_ROLES), payload });
 
       expect(toTest).toMatchObject({
         loading: false,
-        authorities: payload.numbers,
+        authorities: payload.data,
       });
     });
 
     it('should set state to successful update', () => {
-      testMultipleTypes(
-        [SUCCESS(ACTION_TYPES.CREATE_USER), SUCCESS(ACTION_TYPES.UPDATE_USER)],
-        { numbers: 'some handsome user' },
-        types => {
-          expect(types).toMatchObject({
-            updating: false,
-            updateSuccess: true,
-            user: 'some handsome user',
-          });
-        }
-      );
+      testMultipleTypes([SUCCESS(ACTION_TYPES.CREATE_USER), SUCCESS(ACTION_TYPES.UPDATE_USER)], { data: 'some handsome user' }, types => {
+        expect(types).toMatchObject({
+          updating: false,
+          updateSuccess: true,
+          user: 'some handsome user',
+        });
+      });
     });
 
     it('should set state to successful update with an empty user', () => {
