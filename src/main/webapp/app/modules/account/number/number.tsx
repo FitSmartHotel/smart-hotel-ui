@@ -33,6 +33,7 @@ export const NumberPage = (props: NumberProps) => {
             <th className="hand">Price</th>
             <th className="hand">Users Amount</th>
             <th className="hand">Door Locked</th>
+            <th className="hand">Locked</th>
             <th className="hand">Alarm Enabled</th>
             <th className="hand">Registered</th>
             <th />
@@ -52,19 +53,22 @@ export const NumberPage = (props: NumberProps) => {
               <td className="center">
                 <img
                   className="table-image"
-                  src={number.doorLocked ? 'content/images/green_check_mark.svg' : 'content/images/yellow_cross.svg'}
+                  src={number.doorLocked ? 'content/images/green_check_mark.svg' : 'content/images/red_cross.svg'}
+                />
+              </td>
+              <td className="center">
+                <img className="table-image" src={number.locked ? 'content/images/green_check_mark.svg' : 'content/images/red_cross.svg'} />
+              </td>
+              <td className="center">
+                <img
+                  className="table-image"
+                  src={number.alarmEnabled ? 'content/images/green_check_mark.svg' : 'content/images/red_cross.svg'}
                 />
               </td>
               <td className="center">
                 <img
                   className="table-image"
-                  src={number.alarmEnabled ? 'content/images/green_check_mark.svg' : 'content/images/yellow_cross.svg'}
-                />
-              </td>
-              <td className="center">
-                <img
-                  className="table-image"
-                  src={number.registered ? 'content/images/green_check_mark.svg' : 'content/images/yellow_cross.svg'}
+                  src={number.registered ? 'content/images/green_check_mark.svg' : 'content/images/red_cross.svg'}
                 />
               </td>
               <td className="text-right">
