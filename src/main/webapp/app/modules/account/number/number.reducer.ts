@@ -8,6 +8,7 @@ export const ACTION_TYPES = {
   FETCH_NUMBERS: 'number/NUMBERS',
   FETCH_NUMBER: 'number/NUMBER',
   CREATE_NUMBER: 'number/CREATE_NUMBER',
+  ASSIGN_NUMBER: 'number/ASSIGN_NUMBER',
   DELETE_NUMBER: 'number/DELETE_NUMBER',
 };
 
@@ -27,6 +28,7 @@ export default (state: NumberState = initialState, action): NumberState => {
     case REQUEST(ACTION_TYPES.FETCH_NUMBERS):
     case REQUEST(ACTION_TYPES.DELETE_NUMBER):
     case REQUEST(ACTION_TYPES.FETCH_NUMBER):
+    case REQUEST(ACTION_TYPES.ASSIGN_NUMBER):
       return {
         ...state,
         loading: true,
@@ -44,6 +46,7 @@ export default (state: NumberState = initialState, action): NumberState => {
         loading: false,
         number: action.payload.data,
       };
+    case SUCCESS(ACTION_TYPES.ASSIGN_NUMBER):
     case SUCCESS(ACTION_TYPES.DELETE_NUMBER):
       return {
         ...state,
@@ -54,6 +57,7 @@ export default (state: NumberState = initialState, action): NumberState => {
     case FAILURE(ACTION_TYPES.FETCH_NUMBERS):
     case FAILURE(ACTION_TYPES.DELETE_NUMBER):
     case FAILURE(ACTION_TYPES.FETCH_NUMBER):
+    case FAILURE(ACTION_TYPES.ASSIGN_NUMBER):
       return {
         ...state,
         loading: false,
@@ -87,6 +91,13 @@ export const deleteNumber: ICrudDeleteAction<HotelNumber> = number => async disp
   });
   dispatch(getNumbers());
   return result;
+};
+
+export const assignNumber = (number: string, userId: number) => {
+  return {
+    type: ACTION_TYPES.ASSIGN_NUMBER,
+    payload: axios.post(`api/numbers/${number}/assign`, { userId }),
+  };
 };
 
 export const createNumber = (number: string, level: string, price: number) => {

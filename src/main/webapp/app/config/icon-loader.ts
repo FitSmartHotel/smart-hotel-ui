@@ -32,6 +32,7 @@ import { faUserPlus } from '@fortawesome/free-solid-svg-icons/faUserPlus';
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers';
 import { faUsersCog } from '@fortawesome/free-solid-svg-icons/faUsersCog';
 import { faWrench } from '@fortawesome/free-solid-svg-icons/faWrench';
+import { faAddressCard } from '@fortawesome/free-solid-svg-icons/faAddressCard';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 
@@ -70,6 +71,7 @@ export const loadIcons = () => {
     faUsers,
     faUsersCog,
     faWrench,
-    faBed
+    faBed,
+    faAddressCard
   );
 };

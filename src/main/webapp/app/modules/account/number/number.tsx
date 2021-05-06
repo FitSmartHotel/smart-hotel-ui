@@ -31,6 +31,7 @@ export const NumberPage = (props: NumberProps) => {
             <th className="hand">Room Number</th>
             <th className="hand">Level</th>
             <th className="hand">Price</th>
+            <th className="hand">Status</th>
             <th className="hand">Users Amount</th>
             <th className="hand">Door Locked</th>
             <th className="hand">Locked</th>
@@ -49,6 +50,7 @@ export const NumberPage = (props: NumberProps) => {
               </td>
               <td>{number.level}</td>
               <td>{number.price}</td>
+              <td className="center">{number.isAssigned ? 'Assigned to: ' + number.assingedUserLogin : 'Free'}</td>
               <td className="center">{number.usersAmount}</td>
               <td className="center">
                 <img
@@ -73,6 +75,9 @@ export const NumberPage = (props: NumberProps) => {
               </td>
               <td className="text-right">
                 <div className="btn-group flex-btn-group-container">
+                  <Button tag={Link} to={`${match.url}/${number.number}/assign`} color="info" size="sm">
+                    <FontAwesomeIcon icon="address-card" /> <span className="d-none d-md-inline">Assing</span>
+                  </Button>
                   <Button tag={Link} to={`${match.url}/404`} color="info" size="sm">
                     <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
                   </Button>
