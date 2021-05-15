@@ -1,9 +1,9 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { connect } from 'react-redux';
-import { getNumbers } from 'app/modules/account/number/number.reducer';
+import { getNumbersAsAdmin } from 'app/modules/account/number/number.reducer';
 import { IRootState } from 'app/shared/reducers';
-import { Button, Col, Label, Table } from 'reactstrap';
+import { Button, Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link, RouteComponentProps } from 'react-router-dom';
 
@@ -13,14 +13,21 @@ export const NumberPage = (props: NumberProps) => {
   useState([]);
 
   useEffect(() => {
-    props.getNumbers();
+    props.getNumbersAsAdmin();
   }, []);
 
   const { match } = props;
 
+  const handleSyncList = () => {
+    props.getNumbersAsAdmin();
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-end">
+        <Button className="mr-2" color="info" onClick={handleSyncList} disabled={props.loading}>
+          <FontAwesomeIcon icon="sync" spin={props.loading} /> Refresh List
+        </Button>
         <Link to={`${match.url}/new`} className="btn btn-primary jh-create-entity">
           <FontAwesomeIcon icon="plus" /> Create new number
         </Link>
@@ -102,7 +109,7 @@ const mapStateToProps = ({ numbers }: IRootState) => ({
   numbers: numbers.numbers,
 });
 
-const mapDispatchToProps = { getNumbers };
+const mapDispatchToProps = { getNumbersAsAdmin };
 
 type DispatchProps = typeof mapDispatchToProps;
 type StateProps = ReturnType<typeof mapStateToProps>;

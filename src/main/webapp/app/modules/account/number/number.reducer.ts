@@ -4,11 +4,15 @@ import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util'
 import { ICrudDeleteAction, ICrudPutAction, ICrudSearchAction } from 'react-jhipster';
 
 export const ACTION_TYPES = {
-  FETCH_NUMBERS: 'number/NUMBERS',
+  FETCH_NUMBERS_AS_ADMIN: 'number/NUMBERS',
   FETCH_NUMBER: 'number/NUMBER',
+  FETCH_USERS_NUMBERS: 'number/NUMBERS',
   CREATE_NUMBER: 'number/CREATE_NUMBER',
   ASSIGN_NUMBER: 'number/ASSIGN_NUMBER',
   DELETE_NUMBER: 'number/DELETE_NUMBER',
+  LOCK_NUMBER: 'number/DELETE_NUMBER',
+  SET_ALARM_STATE: 'number/SET_ALARM_STATE',
+  UNLOCK_NUMBER: 'number/UNLOCK_NUMBER',
 };
 
 const initialState = {
@@ -24,22 +28,30 @@ export type NumberState = Readonly<typeof initialState>;
 export default (state: NumberState = initialState, action): NumberState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.CREATE_NUMBER):
-    case REQUEST(ACTION_TYPES.FETCH_NUMBERS):
+    case REQUEST(ACTION_TYPES.FETCH_NUMBERS_AS_ADMIN):
     case REQUEST(ACTION_TYPES.DELETE_NUMBER):
     case REQUEST(ACTION_TYPES.FETCH_NUMBER):
+    case REQUEST(ACTION_TYPES.FETCH_USERS_NUMBERS):
     case REQUEST(ACTION_TYPES.ASSIGN_NUMBER):
+    case REQUEST(ACTION_TYPES.LOCK_NUMBER):
+    case REQUEST(ACTION_TYPES.UNLOCK_NUMBER):
+    case REQUEST(ACTION_TYPES.SET_ALARM_STATE):
       return {
         ...state,
         loading: true,
       };
-    case SUCCESS(ACTION_TYPES.FETCH_NUMBERS):
+    case SUCCESS(ACTION_TYPES.FETCH_USERS_NUMBERS):
+    case SUCCESS(ACTION_TYPES.FETCH_NUMBERS_AS_ADMIN):
       return {
         ...state,
         loading: false,
         numbers: action.payload.data,
       };
+    case SUCCESS(ACTION_TYPES.LOCK_NUMBER):
+    case SUCCESS(ACTION_TYPES.UNLOCK_NUMBER):
     case SUCCESS(ACTION_TYPES.FETCH_NUMBER):
     case SUCCESS(ACTION_TYPES.CREATE_NUMBER):
+    case SUCCESS(ACTION_TYPES.SET_ALARM_STATE):
       return {
         ...state,
         loading: false,
@@ -53,10 +65,14 @@ export default (state: NumberState = initialState, action): NumberState => {
         number: defaultValue,
       };
     case FAILURE(ACTION_TYPES.CREATE_NUMBER):
-    case FAILURE(ACTION_TYPES.FETCH_NUMBERS):
+    case FAILURE(ACTION_TYPES.FETCH_NUMBERS_AS_ADMIN):
     case FAILURE(ACTION_TYPES.DELETE_NUMBER):
     case FAILURE(ACTION_TYPES.FETCH_NUMBER):
+    case FAILURE(ACTION_TYPES.FETCH_USERS_NUMBERS):
     case FAILURE(ACTION_TYPES.ASSIGN_NUMBER):
+    case FAILURE(ACTION_TYPES.LOCK_NUMBER):
+    case FAILURE(ACTION_TYPES.UNLOCK_NUMBER):
+    case FAILURE(ACTION_TYPES.SET_ALARM_STATE):
       return {
         ...state,
         loading: false,
@@ -69,10 +85,44 @@ export default (state: NumberState = initialState, action): NumberState => {
   }
 };
 
-export const getNumbers = () => {
+export const getNumbersAsAdmin = () => {
   return {
-    type: ACTION_TYPES.FETCH_NUMBERS,
-    payload: axios.get<HotelNumber>('api/numbers'),
+    type: ACTION_TYPES.FETCH_NUMBERS_AS_ADMIN,
+    payload: axios.get<HotelNumber>('api/numbers/admin'),
+  };
+};
+
+export const setAlarmState: ICrudPutAction<any> = payload => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.LOCK_NUMBER,
+    payload: axios.put(`api/numbers/${payload.number}/management/alarm?enable=${payload.enabled}`),
+  });
+  dispatch(getUserNumbers());
+  return result;
+};
+
+export const lockNumber: ICrudPutAction<HotelNumber> = number => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.LOCK_NUMBER,
+    payload: axios.put(`api/numbers/${number}/management/lock`),
+  });
+  dispatch(getUserNumbers());
+  return result;
+};
+
+export const unlockNumber: ICrudPutAction<HotelNumber> = number => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UNLOCK_NUMBER,
+    payload: axios.put(`api/numbers/${number}/management/unlock`),
+  });
+  dispatch(getUserNumbers());
+  return result;
+};
+
+export const getUserNumbers = () => {
+  return {
+    type: ACTION_TYPES.FETCH_USERS_NUMBERS,
+    payload: axios.get<HotelNumber>('api/numbers/assigned'),
   };
 };
 
@@ -88,7 +138,7 @@ export const deleteNumber: ICrudDeleteAction<HotelNumber> = number => async disp
     type: ACTION_TYPES.DELETE_NUMBER,
     payload: axios.delete(`api/numbers/${number}`),
   });
-  dispatch(getNumbers());
+  dispatch(getNumbersAsAdmin());
   return result;
 };
 
@@ -97,7 +147,7 @@ export const assignNumber: ICrudPutAction<any> = payload => async dispatch => {
     type: ACTION_TYPES.ASSIGN_NUMBER,
     payload: axios.post<HotelNumber>(`api/numbers/${payload.number}/assign`, { userId: payload.userId }),
   });
-  dispatch(getNumbers());
+  dispatch(getNumbersAsAdmin());
   return result;
 };
 
