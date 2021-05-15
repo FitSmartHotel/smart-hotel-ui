@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { defaultValue, HotelNumber } from 'app/shared/model/number.model';
 import { FAILURE, REQUEST, SUCCESS } from 'app/shared/reducers/action-type.util';
-import { IUser } from 'app/shared/model/user.model';
-import { ICrudDeleteAction } from 'react-jhipster';
+import { ICrudDeleteAction, ICrudPutAction, ICrudSearchAction } from 'react-jhipster';
 
 export const ACTION_TYPES = {
   FETCH_NUMBERS: 'number/NUMBERS',
@@ -93,11 +92,13 @@ export const deleteNumber: ICrudDeleteAction<HotelNumber> = number => async disp
   return result;
 };
 
-export const assignNumber = (number: string, userId: number) => {
-  return {
+export const assignNumber: ICrudPutAction<any> = payload => async dispatch => {
+  const result = await dispatch({
     type: ACTION_TYPES.ASSIGN_NUMBER,
-    payload: axios.post(`api/numbers/${number}/assign`, { userId }),
-  };
+    payload: axios.post<HotelNumber>(`api/numbers/${payload.number}/assign`, { userId: payload.userId }),
+  });
+  dispatch(getNumbers());
+  return result;
 };
 
 export const createNumber = (number: string, level: string, price: number) => {

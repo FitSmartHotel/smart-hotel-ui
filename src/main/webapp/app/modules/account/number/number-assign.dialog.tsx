@@ -11,6 +11,7 @@ export interface NumberAssignDialogProps extends StateProps, DispatchProps, Rout
 
 export const NumberAssignDialog = (props: NumberAssignDialogProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const toggle = () => setDropdownOpen(prevState => !prevState);
 
@@ -25,32 +26,39 @@ export const NumberAssignDialog = (props: NumberAssignDialogProps) => {
   };
 
   const assingUser = event => {
-    // eslint-disable-next-line no-console
-    console.log('Assinging user');
-    // eslint-disable-next-line no-console
-    console.log(props.users);
-
+    props.assignNumber({
+      number: props.number.number,
+      userId: selectedUser,
+    });
     handleClose(event);
+  };
+
+  const handleDropdownChange = userId => {
+    setSelectedUser(userId);
   };
 
   return (
     <Modal isOpen toggle={handleClose}>
       <ModalHeader toggle={handleClose}>Assing operation</ModalHeader>
-      <ModalBody>Choose user to assing the room to: </ModalBody>
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Users</DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem header>Users</DropdownItem>
-          <DropdownItem>Header</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
       <ModalFooter>
+        <ModalBody>Choose user to assing the room to: </ModalBody>
+        <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+          <DropdownToggle caret>Users</DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem header>Users</DropdownItem>
+            {props.users.map(u => (
+              <DropdownItem onClick={() => handleDropdownChange(u.id)} key={u.id}>
+                {u.firstName + ' ' + u.lastName}
+              </DropdownItem>
+            ))}
+          </DropdownMenu>
+        </Dropdown>
         <Button color="secondary" onClick={handleClose}>
           <FontAwesomeIcon icon="ban" />
           &nbsp; Cancel
         </Button>
-        <Button color="danger" onClick={assingUser}>
-          <FontAwesomeIcon icon="trash" />
+        <Button color="success" onClick={assingUser} disabled={selectedUser == null}>
+          <FontAwesomeIcon icon="thumbtack" />
           &nbsp; Assing
         </Button>
       </ModalFooter>
