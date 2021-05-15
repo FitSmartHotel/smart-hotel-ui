@@ -8,7 +8,7 @@ export interface HotelNumber {
   locked: boolean;
   alarmEnabled?: boolean;
   registered?: boolean;
-  isAssigned?: boolean;
+  assigned?: boolean;
   assignedUserLogin?: string;
 }
 
@@ -22,6 +22,6 @@ export const defaultValue: Readonly<HotelNumber> = {
   locked: false,
   alarmEnabled: false,
   registered: false,
-  isAssigned: false,
+  assigned: false,
   assignedUserLogin: '',
 };

@@ -31,13 +31,12 @@ export const NumberPage = (props: NumberProps) => {
             <th className="hand">Room Number</th>
             <th className="hand">Level</th>
             <th className="hand">Price</th>
-            <th className="hand">Status</th>
-            <th className="hand">Users Amount</th>
-            <th className="hand">Door Locked</th>
-            <th className="hand">Locked</th>
-            <th className="hand">Alarm Enabled</th>
-            <th className="hand">Registered</th>
-            <th className="hand">Assigned User</th>
+            <th className="hand center">Status</th>
+            <th className="hand center">Users Amount</th>
+            <th className="hand center">Door Locked</th>
+            <th className="hand center">Locked</th>
+            <th className="hand center">Alarm Enabled</th>
+            <th className="hand center">Registered</th>
             <th />
           </tr>
         </thead>
@@ -51,7 +50,7 @@ export const NumberPage = (props: NumberProps) => {
               </td>
               <td>{number.level}</td>
               <td>{number.price}</td>
-              <td className="center">{number.isAssigned ? 'Assigned to: ' + number.assignedUserLogin : 'Free'}</td>
+              <td className="center">{number.assigned ? 'Assigned ' + number.assignedUserLogin : 'Free'}</td>
               <td className="center">{number.usersAmount}</td>
               <td className="center">
                 <img
@@ -74,7 +73,6 @@ export const NumberPage = (props: NumberProps) => {
                   src={number.registered ? 'content/images/green_check_mark.svg' : 'content/images/red_cross.svg'}
                 />
               </td>
-              <td>{number.assignedUserLogin}</td>
               <td className="text-right">
                 <div className="btn-group flex-btn-group-container">
                   <Button tag={Link} to={`${match.url}/${number.number}/assign`} color="info" size="sm">
