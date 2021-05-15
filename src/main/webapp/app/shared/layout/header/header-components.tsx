@@ -21,10 +21,21 @@ export const Brand = props => (
 );
 
 export const Home = props => (
+  <>
+    <NavItem>
+      <NavLink tag={Link} to="/" className="d-flex align-items-center">
+        <FontAwesomeIcon icon="home" />
+        <span>Home</span>
+      </NavLink>
+    </NavItem>
+  </>
+);
+
+export const MyNumber = props => (
   <NavItem>
-    <NavLink tag={Link} to="/" className="d-flex align-items-center">
-      <FontAwesomeIcon icon="home" />
-      <span>Home</span>
+    <NavLink tag={Link} to="/number" className="d-flex align-items-center">
+      <FontAwesomeIcon icon="bed" />
+      <span>My Number</span>
     </NavLink>
   </NavItem>
 );

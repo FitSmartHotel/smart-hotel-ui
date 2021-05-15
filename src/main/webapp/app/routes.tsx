@@ -15,12 +15,17 @@ import PageNotFound from 'app/shared/error/page-not-found';
 import { AUTHORITIES } from 'app/config/constants';
 
 const Account = Loadable({
-  loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
+  loader: () => import('app/modules/account'),
   loading: () => <div>loading ...</div>,
 });
 
 const Admin = Loadable({
-  loader: () => import(/* webpackChunkName: "administration" */ 'app/modules/administration'),
+  loader: () => import('app/modules/administration'),
+  loading: () => <div>loading ...</div>,
+});
+
+const NumberController = Loadable({
+  loader: () => import('app/modules/account/controller'),
   loading: () => <div>loading ...</div>,
 });
 
@@ -36,6 +41,7 @@ const Routes = () => {
         <ErrorBoundaryRoute path="/account/reset/finish/:key?" component={PasswordResetFinish} />
         <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
         <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
+        <PrivateRoute path="/number" component={NumberController} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.USER]} />
         <ErrorBoundaryRoute path="/" exact component={Home} />
         <ErrorBoundaryRoute component={PageNotFound} />
       </Switch>
